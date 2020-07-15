@@ -1,0 +1,10 @@
+TrainerReservation/AbstractEvent.class
+TrainerReservation/AbstractEvent$1.class
+TrainerReservation/ReservationDeclined.class
+TrainerReservation/TrainerApplication.class
+TrainerReservation/PolicyHandler.class
+TrainerReservation/ReservationApproved.class
+TrainerReservation/TrainerRepository.class
+TrainerReservation/TrainerController.class
+TrainerReservation/Trainer.class
+TrainerReservation/config/kafka/KafkaProcessor.class
