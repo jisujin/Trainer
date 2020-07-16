@@ -19,59 +19,62 @@ public class Trainer {
     @PrePersist
     public void onPrePersist() {
 
-        int random1 = (int)(Math.random() * 2);
+        System.out.println("START");
+        if (this.getStatus().equals("Approved")) {
+            System.out.println("seq1");
+            ReservationApproved reservationApproved = new ReservationApproved();
 
-        System.out.println("Start.");
+            reservationApproved.setReservationDate(this.toString());
+            reservationApproved.setReservationId(this.getReservationId());
+            reservationApproved.setStatus("Approved");
+            reservationApproved.setTrainerId(this.getTrainerId());
 
+            BeanUtils.copyProperties(this, reservationApproved);
+            reservationApproved.publishAfterCommit();
 
+        } else if (this.getStatus().equals("Declined")) {
+            System.out.println("seq2");
+            ReservationDeclined reservationDeclined = new ReservationDeclined();
 
-        if(this.getStatus().equals("Requested")) {
-            if (random1 == 0) {
+            reservationDeclined.setReservationDate(this.getReservationDate());
+            reservationDeclined.setReservationId(this.getReservationId());
+            reservationDeclined.setStatus("Declined");
+            reservationDeclined.setTrainerId(this.getTrainerId());
 
-                try {
-                    Thread.currentThread().sleep((long) (1500 + Math.random() * 220));
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-                ReservationApproved reservationApproved = new ReservationApproved();
-                System.out.println("Test1: " + this.getStatus());
-                System.out.println("TEST1: " + this.getReservationDate());
-                System.out.println("TEST1: " + this.getTrainerId());
-
-                reservationApproved.setReservationDate(this.getReservationDate());
-                reservationApproved.setReservationId(this.getReservationId());
-                reservationApproved.setStatus("Approved");
-                reservationApproved.setTrainerId(this.getTrainerId());
-
-
-                BeanUtils.copyProperties(this, reservationApproved);
-                reservationApproved.publishAfterCommit();
-            } else {
-
-                try {
-                    Thread.currentThread().sleep((long) (1500 + Math.random() * 220));
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-                System.out.println("Test2: " + this.getStatus());
-                System.out.println("TEST2: " + this.getReservationDate());
-                System.out.println("TEST2: " + this.getTrainerId());
-
-                ReservationDeclined reservationDeclined = new ReservationDeclined();
-
-                reservationDeclined.setReservationDate(this.getReservationDate());
-                reservationDeclined.setReservationId(this.getReservationId());
-                reservationDeclined.setStatus("Declined");
-                reservationDeclined.setTrainerId(this.getTrainerId());
-
-                BeanUtils.copyProperties(this, reservationDeclined);
-                reservationDeclined.publishAfterCommit();
-            }
+            BeanUtils.copyProperties(this, reservationDeclined);
+            reservationDeclined.publishAfterCommit();
         }
     }
 
+    @PostUpdate
+    public void onPostUpdate() {
+
+        System.out.println("START2");
+        if (this.getStatus().equals("Approved")) {
+            System.out.println("seq1");
+            ReservationApproved reservationApproved = new ReservationApproved();
+
+            reservationApproved.setReservationDate(this.toString());
+            reservationApproved.setReservationId(this.getReservationId());
+            reservationApproved.setStatus("Approved");
+            reservationApproved.setTrainerId(this.getTrainerId());
+
+            BeanUtils.copyProperties(this, reservationApproved);
+            reservationApproved.publishAfterCommit();
+
+        } else if (this.getStatus().equals("Declined")) {
+            System.out.println("seq2");
+            ReservationDeclined reservationDeclined = new ReservationDeclined();
+
+            reservationDeclined.setReservationDate(this.getReservationDate());
+            reservationDeclined.setReservationId(this.getReservationId());
+            reservationDeclined.setStatus("Declined");
+            reservationDeclined.setTrainerId(this.getTrainerId());
+
+            BeanUtils.copyProperties(this, reservationDeclined);
+            reservationDeclined.publishAfterCommit();
+        }
+    }
     public Long getTrainerId() {
         return trainerId;
     }
